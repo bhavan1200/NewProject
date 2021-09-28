@@ -1,19 +1,24 @@
-import React from 'react'
-import { View, Text } from 'react-native';
+import "react-native-gesture-handler";
+import React, { useEffect, useState } from "react";
+import { SafeAreaProvider } from "react-native-safe-area-context";
+import Amplify, { DataStore, Hub, Auth } from "aws-amplify";
 import { withAuthenticator } from "aws-amplify-react-native";
 import config from "./src/aws-exports";
-import Amplify, { DataStore, Hub, Auth } from "aws-amplify";
-
-
-Amplify.configure(config);
+import { NavigationContainer } from '@react-navigation/native';
+import moment from "moment";
+import TabAndStack from "./src/navigation/StackAndTab";
 
 
 const App = () => {
+
+  
+ 
+ 
   return (
-    <View>
-      <Text>App.js qhw</Text>
-    </View>
+    <NavigationContainer>
+      <TabAndStack />
+    </NavigationContainer>
   )
 }
 
-export default withAuthenticator(App);
+export default App;
