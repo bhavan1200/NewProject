@@ -1,15 +1,42 @@
 {
   "staging": {
     "awscloudformation": {
-      "AuthRoleName": "amplify-newbackend-staging-130649-authRole",
-      "UnauthRoleArn": "arn:aws:iam::135441936229:role/amplify-newbackend-staging-130649-unauthRole",
-      "AuthRoleArn": "arn:aws:iam::135441936229:role/amplify-newbackend-staging-130649-authRole",
+      "AuthRoleName": "amplify-awesometsproject-staging-90827-authRole",
+      "UnauthRoleArn": "arn:aws:iam::135441936229:role/amplify-awesometsproject-staging-90827-unauthRole",
+      "AuthRoleArn": "arn:aws:iam::135441936229:role/amplify-awesometsproject-staging-90827-authRole",
       "Region": "ap-south-1",
-      "DeploymentBucketName": "amplify-newbackend-staging-130649-deployment",
-      "UnauthRoleName": "amplify-newbackend-staging-130649-unauthRole",
-      "StackName": "amplify-newbackend-staging-130649",
-      "StackId": "arn:aws:cloudformation:ap-south-1:135441936229:stack/amplify-newbackend-staging-130649/f15e1e40-205c-11ec-9ef2-0ae54e16c404",
-      "AmplifyAppId": "d2eaq7eqsjl4kd"
+      "DeploymentBucketName": "amplify-awesometsproject-staging-90827-deployment",
+      "UnauthRoleName": "amplify-awesometsproject-staging-90827-unauthRole",
+      "StackName": "amplify-awesometsproject-staging-90827",
+      "StackId": "arn:aws:cloudformation:ap-south-1:135441936229:stack/amplify-awesometsproject-staging-90827/225b1690-274e-11ec-8d98-0659b4ddbc36",
+      "AmplifyAppId": "d1e68rqhf89kw0"
+    },
+    "categories": {
+      "function": {
+        "AmplifyOTPCreateAuthChallenge": {
+          "deploymentBucketName": "amplify-awesometsproject-staging-90827-deployment",
+          "s3Key": "amplify-builds/AmplifyOTPCreateAuthChallenge-466b62666e384441484e-build.zip"
+        },
+        "AmplifyOTPDefineAuthChallenge": {
+          "deploymentBucketName": "amplify-awesometsproject-staging-90827-deployment",
+          "s3Key": "amplify-builds/AmplifyOTPDefineAuthChallenge-64615230726b4b6a4c31-build.zip"
+        },
+        "AmplifyOTPPreSignup": {
+          "deploymentBucketName": "amplify-awesometsproject-staging-90827-deployment",
+          "s3Key": "amplify-builds/AmplifyOTPPreSignup-636a457a4d4d726d5a50-build.zip"
+        },
+        "AmplifyOTPVerifyAuthChallengeResponse": {
+          "deploymentBucketName": "amplify-awesometsproject-staging-90827-deployment",
+          "s3Key": "amplify-builds/AmplifyOTPVerifyAuthChallengeResponse-616f5273733365496d62-build.zip"
+        },
+        "AwesomeTSProjectPostConfirmation": {
+          "deploymentBucketName": "amplify-awesometsproject-staging-90827-deployment",
+          "s3Key": "amplify-builds/AwesomeTSProjectPostConfirmation-616d714e41315a794d59-build.zip"
+        }
+      },
+      "auth": {
+        "AwesomeTSProject": {}
+      }
     }
   }
 }
