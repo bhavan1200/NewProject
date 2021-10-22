@@ -7,6 +7,7 @@ import { AsyncStorage } from "react-native"
 
 import TabAndStack from "./src/navigation/StackAndTab";
 import OnBoardingScreen from "./src/screens/OnBoardinScreen"
+import awsconfig from "./src/aws-exports"
 import SignIn from "./src/screens/SignInScreen"
 import Logo from "./src/assets/5.png";
 import PhoneInput from "react-native-phone-number-input";
@@ -19,13 +20,7 @@ import {createNativeStackNavigator} from '@react-navigation/native-stack';
 const AppStack = createNativeStackNavigator();
 
 
-Amplify.configure({
-  Auth: {
-    region: "ap-south-1",
-    userPoolId: "ap-south-1_KF4Wtz8Lw",
-    userPoolWebClientId: "40nqoo1vvckmuc5t9bv81ak3q3",
-  },
-});
+Amplify.configure(awsconfig);
 
 
 const App = () => {

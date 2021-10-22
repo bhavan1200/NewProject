@@ -2,7 +2,7 @@ import React, {useState, useEffect} from 'react';
 import {Text, Image, View, Pressable, ActivityIndicator} from 'react-native';
 import {useNavigation} from '@react-navigation/core';
 import {DataStore} from '@aws-amplify/datastore';
-import {ChatRoomUser, User, Message} from '../../../models';
+import {ChatRoomUser,ChatRoom, User, Message} from '../../../models';
 import styles from './styles';
 import Auth from '@aws-amplify/auth';
 import moment from 'moment';
@@ -10,6 +10,8 @@ import moment from 'moment';
 
 
 const UserItem = ({ user }) => {
+
+  
   
 
   const navigation = useNavigation();
@@ -41,9 +43,32 @@ const UserItem = ({ user }) => {
   //   );
   // }, []);
 
-  const onPress = () => {
-    //create a chatromm with user
-  };
+  const onPress = async () => {
+    //create a chatroom with user
+    const newChatRoom = await DataStore.save(new ChatRoom({}));
+
+    //connect auth user with ChatRoom
+    const authUser = await Auth.currentAuthenticatedUser();
+    const dbUser = await DataStore.query(User, authUser.attributes.sub);
+    
+    await DataStore.save(new ChatRoomUser({
+      user: dbUser,
+      chatroom: newChatRoom,
+    }))
+
+    // console.warn(user);
+
+    //connect clicked user to chatroom
+    await DataStore.save(new ChatRoomUser({
+      user,
+      chatroom: newChatRoom,
+    }))
+
+    navigation.navigate("ChatRoomScreen", { id: newChatRoom.id });
+   };
+
+   
+   
 
   // if (isLoading) {
   //   return <ActivityIndicator />;

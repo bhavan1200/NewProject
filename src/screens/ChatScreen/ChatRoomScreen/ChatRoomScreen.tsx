@@ -9,7 +9,7 @@ import {useRoute} from '@react-navigation/core';
 
 const ChatRoomScreen = () => {
   const route = useRoute();
-  console.warn(route.params?.id)
+  // console.warn(route.params?.id)
   return (
     <SafeAreaView style={styles.page}>
       <FlatList

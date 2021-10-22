@@ -3,7 +3,6 @@ import {View, StyleSheet, FlatList, Text, Pressable} from 'react-native';
 import ChatRoomItem from "../../../components/ChatComponent/ChatRoomItem";
 import { ChatRoomUser, ChatRoom, User } from "../../../models"
 import { DataStore, Auth } from "aws-amplify"
-import ChatRooms from "../../../data/Users"
 import UserItem from "../../../components/ChatComponent/UserItem";
 
 
@@ -11,18 +10,26 @@ import UserItem from "../../../components/ChatComponent/UserItem";
 
 const UserScreen = () => {
 
+   const [users, setUsers] = useState<User[]>([]);
+
+  useEffect(() => {
+    DataStore.query(User).then(setUsers)
+  }, []);
+
 
   // useEffect(() => {
-  //  const fetchChatRooms = async () => {
-  //    const fetchedChatRooms = await DataStore.query(ChatRoom)
+  //  const fetchUsers = async () => {
+  //    const fetchedUsers = await DataStore.query(User);
+  //       setUsers(fetchedUsers)
   //  }
-  //  fetchChatRooms();
+  //  fetchUsers();
   // }, [])
+
 
    return (
     <View>
       <FlatList 
-      data={ChatRooms}
+      data={users}
       renderItem={({item}) => <UserItem user={item} /> }
       showsVerticalScrollIndicator={false}
       />
