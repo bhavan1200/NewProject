@@ -1,129 +1,33 @@
-import React, { useState, useEffect } from "react";
-
-import {
-  View,
-  StyleSheet,
-  FlatList,
-  Text,
-  Pressable,
-  SafeAreaView,
-  Alert,
-} from "react-native";
+import React, { useState, useEffect } from 'react';
+import {View, StyleSheet, FlatList, Text, Pressable} from 'react-native';
+import ChatRoomItem from "../../../components/ChatComponent/ChatRoomItem";
+import { ChatRoomUser, ChatRoom, User } from "../../../models"
+import { DataStore, Auth } from "aws-amplify"
+import ChatRooms from "../../../data/Users"
 import UserItem from "../../../components/ChatComponent/UserItem";
-import NewGroupButton from "../../../components/ChatComponent/NewGroupButton";
-import { useNavigation } from "@react-navigation/native";
-import { Auth, DataStore } from "aws-amplify";
-import { ChatRoom, User, ChatRoomUser } from "../../../models";
-import styles from "./styles";
 
-export default function UsersScreen() {
-  const [users, setUsers] = useState<User[]>([]);
-  const [selectedUsers, setSelectedUsers] = useState<User[]>([]);
-  const [isNewGroup, setIsNewGroup] = useState(false);
 
-  const navigation = useNavigation();
 
-  useEffect(() => {
-    DataStore.query(User).then(setUsers);
-  }, []);
+
+const UserScreen = () => {
+
 
   // useEffect(() => {
-  //   // query users
-  //   const fetchUsers = async () => {
-  //     const fetchedUsers = await DataStore.query(User);
-  //     setUsers(fetchedUsers);
-  //   };
-  //   fetchUsers();
+  //  const fetchChatRooms = async () => {
+  //    const fetchedChatRooms = await DataStore.query(ChatRoom)
+  //  }
+  //  fetchChatRooms();
   // }, [])
 
-  const addUserToChatRoom = async (user, chatroom) => {
-    DataStore.save(new ChatRoomUser({ user, chatroom }));
-  };
-
-  const createChatRoom = async (users) => {
-    // TODO if there is already a chat room between these 2 users
-    // then redirect to the existing chat room
-    // otherwise, create a new chatroom with these users.
-
-    // connect authenticated user with the chat room
-    const authUser = await Auth.currentAuthenticatedUser();
-    const dbUser = await DataStore.query(User, authUser.attributes.sub);
-    if (!dbUser) {
-      Alert.alert("There was an error creating the group");
-      return;
-    }
-    // Create a chat room
-    const newChatRoomData = {
-      newMessages: 0,
-      Admin: dbUser,
-    };
-    if (users.length > 1) {
-      newChatRoomData.name = "New group 2";
-      newChatRoomData.imageUri =
-        "https://notjustdev-dummy.s3.us-east-2.amazonaws.com/avatars/group.jpeg";
-    }
-    const newChatRoom = await DataStore.save(new ChatRoom(newChatRoomData));
-
-    if (dbUser) {
-      await addUserToChatRoom(dbUser, newChatRoom);
-    }
-
-    // connect users user with the chat room
-    await Promise.all(
-      users.map((user) => addUserToChatRoom(user, newChatRoom))
-    );
-
-    navigation.navigate("ChatRoom", { id: newChatRoom.id });
-  };
-
-  const isUserSelected = (user) => {
-    return selectedUsers.some((selectedUser) => selectedUser.id === user.id);
-  };
-
-  const onUserPress = async (user) => {
-    if (isNewGroup) {
-      if (isUserSelected(user)) {
-        // remove it from selected
-        setSelectedUsers(
-          selectedUsers.filter((selectedUser) => selectedUser.id !== user.id)
-        );
-      } else {
-        setSelectedUsers([...selectedUsers, user]);
-      }
-    } else {
-      await createChatRoom([user]);
-    }
-  };
-
-  const saveGroup = async () => {
-    await createChatRoom(selectedUsers);
-  };
-
-  return (
-    <SafeAreaView style={styles.page}>
-      <FlatList
-        data={users}
-        renderItem={({ item }) => (
-          <UserItem
-            user={item}
-            onPress={() => onUserPress(item)}
-            isSelected={isNewGroup ? isUserSelected(item) : undefined}
-          />
-        )}
-        showsVerticalScrollIndicator={false}
-        ListHeaderComponent={() => (
-          <NewGroupButton onPress={() => setIsNewGroup(!isNewGroup)} />
-        )}
+   return (
+    <View>
+      <FlatList 
+      data={ChatRooms}
+      renderItem={({item}) => <UserItem user={item} /> }
+      showsVerticalScrollIndicator={false}
       />
-
-      {isNewGroup && (
-        <Pressable style={styles.button} onPress={saveGroup}>
-          <Text style={styles.buttonText}>
-            Save group ({selectedUsers.length})
-          </Text>
-        </Pressable>
-      )}
-    </SafeAreaView>
-  );
+    </View>
+  )
 }
 
+export default UserScreen;

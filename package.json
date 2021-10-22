@@ -17,6 +17,7 @@
     "@react-navigation/native": "^6.0.2",
     "@react-navigation/native-stack": "^6.1.0",
     "@reduxjs/toolkit": "^1.6.1",
+    "@shopify/restyle": "^1.4.0",
     "@unimodules/core": "^7.1.2",
     "amazon-cognito-identity-js": "^5.1.0",
     "aws-amplify": "^4.2.8",

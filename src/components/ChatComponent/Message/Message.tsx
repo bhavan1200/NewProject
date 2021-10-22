@@ -12,10 +12,10 @@ import Ionicons from "react-native-vector-icons/Ionicons"
 
 
 
-
+const myID = "u1";
 
 const Message = ({message}) => {
-    const isMe = true;
+    const isMe = message.user.id === myID;
     return (
     <Pressable
        style={[
@@ -26,7 +26,7 @@ const Message = ({message}) => {
       <View style={styles.row}>
           <View style={{ marginBottom: message.content ? 10 : 0 }}>
           </View>
-          <Text style={{ color: isMe ? "black" : "white" }}></Text>
+          <Text style={{ color: isMe ? "black" : "white" }}>{message.content}</Text>
       </View>
     </Pressable>
     )

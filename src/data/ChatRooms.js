@@ -3,11 +3,11 @@ export default [{
     users: [{
       id: 'u1',
       name: 'Vadim',
-      imageUri: 'https://notjustdev-dummy.s3.us-east-2.amazonaws.com/avatars/vadim.jpg',
+      imageUri: 'https://picsum.photos/200/300',
     }, {
       id: 'u2',
       name: 'Elon Musk',
-      imageUri: 'https://notjustdev-dummy.s3.us-east-2.amazonaws.com/avatars/elon.png',
+      imageUri: 'https://picsum.photos/id/237/200/300',
     }],
     lastMessage: {
       id: 'm1',
@@ -20,11 +20,11 @@ export default [{
     users: [{
       id: 'u1',
       name: 'Vadim',
-      imageUri: 'https://notjustdev-dummy.s3.us-east-2.amazonaws.com/avatars/vadim.jpg',
+      imageUri: 'https://picsum.photos/seed/picsum/200/300',
     }, {
       id: 'u3',
       name: 'Jeff',
-      imageUri: 'https://notjustdev-dummy.s3.us-east-2.amazonaws.com/avatars/jeff.jpeg',
+      imageUri: 'https://picsum.photos/200/300?grayscale',
     }],
     lastMessage: {
       id: 'm2',
@@ -56,7 +56,7 @@ export default [{
     }, {
       id: 'u5',
       name: 'Graham',
-      imageUri: 'https://notjustdev-dummy.s3.us-east-2.amazonaws.com/avatars/graham.jpg',
+      imageUri: 'https://picsum.photos/200/300?grayscale',
     }],
     lastMessage: {
       id: 'm4',

@@ -3,7 +3,7 @@ import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import ShoppingScreen from "../../../screens/ShoppingScreen"
 
 
-ShoppingStack = createNativeStackNavigator();
+const ShoppingStack = createNativeStackNavigator();
 
 const ShoppingStackScreen = () => {
     return (

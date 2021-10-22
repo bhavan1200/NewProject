@@ -1,9 +1,11 @@
 import React from 'react'
 import { View, Text } from 'react-native'
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
-import ChatScreen from "../../../screens/ChatScreen"
+import ChatScreen from "../../../screens/ChatScreen";
+import UsersScreen from "../../../screens/ChatScreen/UsersScreen";
+import  ChatScreenHeader from "../../Header/ChatScreenHeader"
 
-ChatStack = createNativeStackNavigator();
+const ChatStack = createNativeStackNavigator();
 
 const ChatStackScreen = () => {
     return (
@@ -12,8 +14,15 @@ const ChatStackScreen = () => {
               name="ChatScreen" 
               component={ChatScreen}
               options={{ 
-                headerTitle:" Messenger",
+                headerTitle: ChatScreenHeader,
                 headerTitleAlign: "center"
+              }}
+            />
+            <ChatStack.Screen
+              name="UsersScreen" 
+              component={UsersScreen}
+              options={{ 
+                
               }}
             />
         </ChatStack.Navigator>
