@@ -3,12 +3,13 @@ import { View, Text } from 'react-native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import HomeStackScreen from '../Stack/HomeStack/HomeStackScreen';
 import ChatStackScreen from '../Stack/ChatStack/ChatStackScreen';
-
+import DiscoveryScreen from "../../screens/Discovery"
+import ProfileScreen from "../../screens/ProfileScreen"
+import NotiFicationScreen from "../../screens/NotificationScreen"
 import PostStackScreen from '../Stack/PostStack';
 import ShoppingStackScreen from '../Stack/ShoppingStack';
-
+import PostScreen from '../../screens/PostScreen';
 import ShoppingScreen from '../../screens/ShoppingScreen';
-import ProfileScreen from '../../screens/ProfileScreen';
 
 
 import Ionicons from 'react-native-vector-icons/Ionicons';
@@ -22,30 +23,30 @@ const Tab = createBottomTabNavigator();
 const index = () => {
     return (
         <Tab.Navigator
-           initialRouteName= "ChatStackScreen"
+           initialRouteName= "ChatStack"
            screenOptions={({route}) => ({
                tabBarIcon: ({ focused, color, size }) => {
             let iconName;
 
-            if (route.name === 'HomeStackScreen') {
+            if (route.name === 'HomeStack') {
               iconName = focused
                 ? 'home-outline'
                 : 'home';
                 return <Ionicons name={iconName} size={size} color={color} />
             }
-            if (route.name === 'ChatStackScreen') {
+            if (route.name === 'PostStack') {
               iconName = focused ? 'search-minus' : 'search-plus';
               return <FontAwesome name={iconName} size={size} color={color} />
             }
-            if (route.name === 'PostStackScreen') {
+            if (route.name === 'ChatStack') {
               iconName = focused ? 'plus-square-o' : 'plus-square';
               return <FontAwesome name={iconName} size={size} color={color} />
             }
-            if (route.name === 'ShoppingStackScreen') {
+            if (route.name === 'ShoppingStack') {
               iconName = focused ? 'notifications-circle-outline' : 'notifications-circle';
               return <Ionicons name={iconName} size={size} color={color} />
             }
-            if (route.name === 'ProfileScreen') {
+            if (route.name === 'Profile') {
               iconName = focused ? 'person-circle-outline' : 'person-circle';
               return <Ionicons name={iconName} size={size} color={color} />
             }
@@ -57,11 +58,11 @@ const index = () => {
           tabBarShowLabel: false,
         })}
         >
-            <Tab.Screen name="HomeStackScreen" component={HomeStackScreen}/>
-            <Tab.Screen name="ChatStackScreen" component={ChatStackScreen}/>
-            <Tab.Screen name="PostStackScreen" component={PostStackScreen}/>
-            <Tab.Screen name="ShoppingStackScreen" component={ShoppingStackScreen}/>
-            <Tab.Screen name="ProfileScreen" component={ProfileScreen}/>
+            <Tab.Screen name="HomeStack" component={HomeStackScreen}/>
+            <Tab.Screen name="ChatStack" component={ChatStackScreen}/>
+            <Tab.Screen name="PostStack" component={PostStackScreen}/>
+            <Tab.Screen name="ShoppingStack" component={ShoppingStackScreen}/>
+            <Tab.Screen name="Profile" component={ProfileScreen}/>
         </Tab.Navigator> 
     )
 }

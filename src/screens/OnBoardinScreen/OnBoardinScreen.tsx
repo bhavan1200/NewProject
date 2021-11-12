@@ -1,12 +1,12 @@
 import React from 'react'
 import { View, Text } from 'react-native'
 
-const ShoppingScreen = () => {
+const OnBoardinScreen = () => {
     return (
         <View>
-            <Text></Text>
+            <Text>OnBoardinScreen</Text>
         </View>
     )
 }
 
-export default ShoppingScreen
+export default OnBoardinScreen

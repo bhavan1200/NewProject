@@ -1,18 +1,10 @@
 import React from 'react'
-import { View, Text, Button } from 'react-native';
-import styles from "./styles";
-import Amplify, { DataStore, Hub, Auth } from "aws-amplify";
-
+import { View, Text } from 'react-native'
 
 const PostScreen = () => {
     return (
         <View>
-            <Button
-            title="Sign out"
-            onPress={() => {
-              Auth.signOut();
-            }}
-          />
+            <Text>PostScreen</Text>
         </View>
     )
 }
