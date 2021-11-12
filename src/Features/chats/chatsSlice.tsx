@@ -1,6 +1,6 @@
 import { createSlice } from '@reduxjs/toolkit';
 
-const initialState = [
+const initialState = 
     {
         id: '1',
         users: [{
@@ -70,7 +70,7 @@ const initialState = [
             },
         }]
     }
-]
+
 
 export const chatsSlice = createSlice({
   name: 'chats',
