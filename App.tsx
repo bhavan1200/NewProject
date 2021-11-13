@@ -1,16 +1,16 @@
 import React from 'react';
 import {View, Text, Button} from 'react-native';
 import store from './src/App/store';
-import {setMessage} from './src/Features/message/messageSlice';
-import {decrement, increment} from './src/Features/counter/counterSlice';
 import {Provider} from 'react-redux';
-import {useDispatch, useSelector} from 'react-redux';
-import PostList from './src/Features/posts/postList';
+import {Amplify} from "aws-amplify";
+import config from "./src/aws-exports"
+import { withAuthenticator } from "aws-amplify-react-native"
 
 import StackAndTab from './src/navigation/StackAndTab';
-
 import {NavigationContainer} from '@react-navigation/native';
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
+
+Amplify.configure(config);
 
 const AppStack = createNativeStackNavigator();
 
@@ -36,4 +36,4 @@ const App = () => {
   );
 };
 
-export default App;
+export default withAuthenticator(App) ;
