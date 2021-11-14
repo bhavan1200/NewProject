@@ -1,8 +1,8 @@
 {
     "identityPoolName": "testAuthIdentityPool",
     "allowUnauthenticatedIdentities": false,
-    "resourceNameTruncated": "awesoma4a29094",
-    "userPoolName": "AwesomeTSProject",
+    "resourceNameTruncated": "premiu04637adf",
+    "userPoolName": "PremiumSocial",
     "autoVerifiedAttributes": [
         "email"
     ],
@@ -25,10 +25,10 @@
     "userpoolClientRefreshTokenValidity": 30,
     "userpoolClientWriteAttributes": [],
     "userpoolClientReadAttributes": [],
-    "userpoolClientLambdaRole": "Awesoma4a29094_userpoolclient_lambda_role",
+    "userpoolClientLambdaRole": "Premiu04637adf_userpoolclient_lambda_role",
     "userpoolClientSetAttributes": false,
-    "sharedId": "a4a29094",
-    "resourceName": "AwesomeTSProject",
+    "sharedId": "04637adf",
+    "resourceName": "PremiumSocial",
     "authSelections": "identityPoolAndUserPool",
     "authRoleArn": {
         "Fn::GetAtt": [
@@ -54,5 +54,23 @@
     "authProviders": [],
     "usernameCaseSensitive": false,
     "useEnabledMfas": true,
-    "dependsOn": []
+    "dependsOn": [
+        {
+            "category": "function",
+            "resourceName": "PremiumSocialPostConfirmation",
+            "triggerProvider": "Cognito",
+            "attributes": [
+                "Arn",
+                "Name"
+            ]
+        }
+    ],
+    "triggers": "{\n  \"PostConfirmation\": [\n    \"custom\"\n  ]\n}",
+    "hostedUI": false,
+    "parentStack": {
+        "Ref": "AWS::StackId"
+    },
+    "authTriggerConnections": "[\n  {\n    \"triggerType\": \"PostConfirmation\",\n    \"lambdaFunctionName\": \"PremiumSocialPostConfirmation\"\n  }\n]",
+    "breakCircularDependency": true,
+    "permissions": []
 }
