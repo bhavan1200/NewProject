@@ -1,12 +1,26 @@
 import React from 'react'
-import { View, Text } from 'react-native'
+import { useSelector } from 'react-redux'
+import { View, Text, Image, StyleSheet, FlatList, Pressable } from 'react-native';
+import UserItem from '../../../Components/chatComponent/UserItem';
+import styles from "./styles";
 
-const UserScreen = () => {
+
+const UsersScreen = () => {
+
+    const Users = useSelector(state => state.users);
+
+    
+
     return (
-        <View>
-            <Text>UserScreen</Text>
+        <View style={styles.page}>
+           <FlatList 
+             data={Users}
+             renderItem={({item}) => <UserItem user={item}/>}
+             showsVerticalScrollIndicator={false}
+            />
         </View>
     )
 }
 
-export default UserScreen
+
+export default UsersScreen;

@@ -1,8 +1,10 @@
 import React from 'react'
-import { View, Text, Image, useWindowDimensions, } from 'react-native'
+import { View, Text, Image, useWindowDimensions, Pressable, } from 'react-native'
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import MainChatScreen from '../../../screens/ChatScreen/MainChatScreen';
+import UsersScreen from "../../../screens/ChatScreen/UsersScreen"
 import Feather from 'react-native-vector-icons/Feather';
+import { useNavigation } from '@react-navigation/core';
 
 
 
@@ -19,11 +21,21 @@ const ChatStackScreen = () => {
                 headerTitleAlign: "center"
               }}
             />
+            <ChatStack.Screen
+              name="UsersScreen" 
+              component={UsersScreen}
+              options={{ 
+                title: "UsersScreen",
+                headerTitleAlign: "center"
+              }}
+            />
         </ChatStack.Navigator>
     )
 }
 
 const MainChatScreenHeader = (props) => {
+
+  const navigation = useNavigation();
 
   const { width } = useWindowDimensions();
 
@@ -41,7 +53,9 @@ const MainChatScreenHeader = (props) => {
       <Text style={{flex: 1, textAlign: "center", marginLeft: 30, fontWeight: "bold"}}>Messenger</Text>
       <View style={{flexDirection: "row"}}>
       <Feather name="camera" size={24} color="black" style={{marginHorizontal: 7,}}/>
+      <Pressable onPress={() => navigation.navigate("UsersScreen")}>
       <Feather name="edit-2" size={24} color="black" style={{marginHorizontal: 18,}}/>
+      </Pressable>
       </View>
     </View>
     
