@@ -101,13 +101,6 @@ export const schema = {
                     "isRequired": true,
                     "attributes": []
                 },
-                "newMessages": {
-                    "name": "newMessages",
-                    "isArray": false,
-                    "type": "Int",
-                    "isRequired": false,
-                    "attributes": []
-                },
                 "LastMessage": {
                     "name": "LastMessage",
                     "isArray": false,
@@ -148,6 +141,13 @@ export const schema = {
                         "connectionType": "HAS_MANY",
                         "associatedWith": "chatroom"
                     }
+                },
+                "newMessage": {
+                    "name": "newMessage",
+                    "isArray": false,
+                    "type": "Int",
+                    "isRequired": false,
+                    "attributes": []
                 },
                 "createdAt": {
                     "name": "createdAt",
@@ -404,5 +404,5 @@ export const schema = {
     },
     "enums": {},
     "nonModels": {},
-    "version": "72e7af9c8ad2f14cec4d3302473aaf5f"
+    "version": "ee998f4030ea9ec5d7b872f55bbd3e5c"
 };

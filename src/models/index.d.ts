@@ -33,10 +33,10 @@ export declare class Message {
 
 export declare class ChatRoom {
   readonly id: string;
-  readonly newMessages?: number;
   readonly LastMessage?: Message;
   readonly Messages?: (Message | null)[];
   readonly ChatRoomUsers?: (ChatRoomUser | null)[];
+  readonly newMessage?: number;
   readonly createdAt?: string;
   readonly updatedAt?: string;
   constructor(init: ModelInit<ChatRoom, ChatRoomMetaData>);

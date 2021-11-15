@@ -1,10 +1,10 @@
 {
-  "AppSyncApiName": "PremiumSocial",
+  "AppSyncApiName": "Bbest",
   "DynamoDBBillingMode": "PAY_PER_REQUEST",
   "DynamoDBEnableServerSideEncryption": false,
   "AuthCognitoUserPoolId": {
     "Fn::GetAtt": [
-      "authPremiumSocial",
+      "authBbest",
       "Outputs.UserPoolId"
     ]
   }

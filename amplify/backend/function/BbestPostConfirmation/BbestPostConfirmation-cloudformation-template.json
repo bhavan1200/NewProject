@@ -1,6 +1,6 @@
 {
   "AWSTemplateFormatVersion": "2010-09-09",
-  "Description": "Lambda resource stack creation using Amplify CLI",
+  "Description": "{\"createdOn\":\"Windows\",\"createdBy\":\"Amplify\",\"createdWith\":\"7.3.0\",\"stackType\":\"function-Lambda\",\"metadata\":{}}",
   "Parameters": {
     "GROUP": {
       "Type": "String",
@@ -67,12 +67,12 @@
         "FunctionName": {
           "Fn::If": [
             "ShouldNotCreateEnvResources",
-            "PremiumSocialPostConfirmation",
+            "BbestPostConfirmation",
             {
               "Fn::Join": [
                 "",
                 [
-                  "PremiumSocialPostConfirmation",
+                  "BbestPostConfirmation",
                   "-",
                   {
                     "Ref": "env"
@@ -122,12 +122,12 @@
         "RoleName": {
           "Fn::If": [
             "ShouldNotCreateEnvResources",
-            "PremiumSocialPostConfirmation",
+            "BbestPostConfirmation",
             {
               "Fn::Join": [
                 "",
                 [
-                  "PremiumSocialPostConfirmation",
+                  "BbestPostConfirmation",
                   "-",
                   {
                     "Ref": "env"

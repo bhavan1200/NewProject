@@ -1,14 +1,16 @@
 {
+  "version": "1",
+  "cognitoConfig": {
     "identityPoolName": "testAuthIdentityPool",
     "allowUnauthenticatedIdentities": false,
-    "resourceNameTruncated": "premiu04637adf",
-    "userPoolName": "PremiumSocial",
+    "resourceNameTruncated": "bbestd6213e13",
+    "userPoolName": "Bbest",
     "autoVerifiedAttributes": [
-        "email"
+      "email"
     ],
     "mfaConfiguration": "OFF",
     "mfaTypes": [
-        "SMS Text Message"
+      "SMS Text Message"
     ],
     "smsAuthenticationMessage": "Your authentication code is {####}",
     "smsVerificationMessage": "Your verification code is {####}",
@@ -18,33 +20,21 @@
     "passwordPolicyMinLength": 8,
     "passwordPolicyCharacters": [],
     "requiredAttributes": [
-        "email"
+      "email"
     ],
     "aliasAttributes": [],
     "userpoolClientGenerateSecret": false,
     "userpoolClientRefreshTokenValidity": 30,
     "userpoolClientWriteAttributes": [],
     "userpoolClientReadAttributes": [],
-    "userpoolClientLambdaRole": "Premiu04637adf_userpoolclient_lambda_role",
+    "userpoolClientLambdaRole": "Bbestd6213e13_userpoolclient_lambda_role",
     "userpoolClientSetAttributes": false,
-    "sharedId": "04637adf",
-    "resourceName": "PremiumSocial",
+    "sharedId": "d6213e13",
+    "resourceName": "Bbest",
     "authSelections": "identityPoolAndUserPool",
-    "authRoleArn": {
-        "Fn::GetAtt": [
-            "AuthRole",
-            "Arn"
-        ]
-    },
-    "unauthRoleArn": {
-        "Fn::GetAtt": [
-            "UnauthRole",
-            "Arn"
-        ]
-    },
     "serviceName": "Cognito",
     "usernameAttributes": [
-        "email"
+      "email"
     ],
     "useDefault": "manual",
     "userPoolGroups": false,
@@ -54,23 +44,40 @@
     "authProviders": [],
     "usernameCaseSensitive": false,
     "useEnabledMfas": true,
+    "authRoleArn": {
+      "Fn::GetAtt": [
+        "AuthRole",
+        "Arn"
+      ]
+    },
+    "unauthRoleArn": {
+      "Fn::GetAtt": [
+        "UnauthRole",
+        "Arn"
+      ]
+    },
+    "breakCircularDependency": true,
     "dependsOn": [
-        {
-            "category": "function",
-            "resourceName": "PremiumSocialPostConfirmation",
-            "triggerProvider": "Cognito",
-            "attributes": [
-                "Arn",
-                "Name"
-            ]
-        }
+      {
+        "category": "function",
+        "resourceName": "BbestPostConfirmation",
+        "triggerProvider": "Cognito",
+        "attributes": [
+          "Arn",
+          "Name"
+        ]
+      }
     ],
-    "triggers": "{\n  \"PostConfirmation\": [\n    \"custom\"\n  ]\n}",
+    "triggers": {
+      "PostConfirmation": [
+        "custom"
+      ]
+    },
     "hostedUI": false,
     "parentStack": {
-        "Ref": "AWS::StackId"
+      "Ref": "AWS::StackId"
     },
-    "authTriggerConnections": "[\n  {\n    \"triggerType\": \"PostConfirmation\",\n    \"lambdaFunctionName\": \"PremiumSocialPostConfirmation\"\n  }\n]",
-    "breakCircularDependency": true,
+    "authTriggerConnections": "[\n  {\n    \"triggerType\": \"PostConfirmation\",\n    \"lambdaFunctionName\": \"BbestPostConfirmation\"\n  }\n]",
     "permissions": []
+  }
 }

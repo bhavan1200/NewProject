@@ -1,12 +1,12 @@
 {
   "auth": {
-    "PremiumSocial": {
+    "Bbest": {
       "service": "Cognito",
       "providerPlugin": "awscloudformation",
       "dependsOn": [
         {
           "category": "function",
-          "resourceName": "PremiumSocialPostConfirmation",
+          "resourceName": "BbestPostConfirmation",
           "triggerProvider": "Cognito",
           "attributes": [
             "Arn",
@@ -38,7 +38,7 @@
     }
   },
   "api": {
-    "PremiumSocial": {
+    "Bbest": {
       "service": "AppSync",
       "providerPlugin": "awscloudformation",
       "output": {
@@ -57,7 +57,7 @@
             {
               "authenticationType": "AMAZON_COGNITO_USER_POOLS",
               "userPoolConfig": {
-                "userPoolId": "authPremiumSocial"
+                "userPoolId": "authBbest"
               }
             }
           ]
@@ -66,7 +66,7 @@
     }
   },
   "function": {
-    "PremiumSocialPostConfirmation": {
+    "BbestPostConfirmation": {
       "build": true,
       "providerPlugin": "awscloudformation",
       "service": "Lambda"

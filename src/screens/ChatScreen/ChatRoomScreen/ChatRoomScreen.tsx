@@ -10,7 +10,6 @@ const ChatRoomScreen = () => {
 
     const route = useRoute();
     const navigation = useNavigation()
-    console.warn(route.params?.id);
     navigation.setOptions({ title: "Elon Musk"})
 
     const chatRoomsData = useSelector(state => state.chats)

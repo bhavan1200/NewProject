@@ -1,27 +1,45 @@
-import React from 'react'
-import { useSelector } from 'react-redux'
+import React, { useState, useEffect } from 'react'
+import { useSelector } from 'react-redux';
+import { DataStore } from '@aws-amplify/datastore';
+import { Auth } from '@aws-amplify/auth';
+import { ChatRoom, ChatRoomUser } from "../../../models"
 import { View, Text, Image, StyleSheet, FlatList, Pressable } from 'react-native';
 import ChatRoomItem from '../../../Components/chatComponent/ChatRoomItem';
 import styles from "./styles";
-import { Auth } from "aws-amplify";
 
 
 const MainChatScreen = () => {
 
+    const [chatRoom, setChatRoom] = useState<ChatRoom[]>([]);
+
     const chatRoomsData = useSelector(state => state.chatRooms);
 
-    const logOut = () => {
-        Auth.signOut();
-    } 
+    useEffect(() => {
+        const fetchChatRooms = async() => {
+        const userData = await Auth.currentAuthenticatedUser();
+
+        const chatRooms = (await DataStore.query( ChatRoomUser))
+        .filter(chatRoomUser => chatRoomUser.user.id === userData.attributes.sub)
+        .map(chatRoomUser => chatRoomUser.chatroom);
+
+        setChatRoom(chatRooms)
+        }
+        fetchChatRooms();
+    }, [])
+
+
+    // const logOut = () => {
+    //     Auth.signOut();
+    // } 
 
     return (
         <View style={styles.page}>
            <FlatList 
-             data={chatRoomsData}
+             data={chatRoom}
              renderItem={({item}) => <ChatRoomItem chatRoom={item}/>}
              showsVerticalScrollIndicator={false}
             />
-            <Pressable onPress={logOut} style={{
+            {/* <Pressable onPress={logOut} style={{
                 backgroundColor: "red", 
                 height:50, 
                 borderRadius: 5, 
@@ -31,7 +49,7 @@ const MainChatScreen = () => {
 
             }}>
                 <Text>LogOut</Text>
-            </Pressable>
+            </Pressable> */}
         </View>
     )
 }

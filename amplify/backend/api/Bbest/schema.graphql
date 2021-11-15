@@ -7,10 +7,10 @@ type Message @model @auth(rules: [{allow: public}]) @key(name: "byUser", fields:
 
 type ChatRoom @model @auth(rules: [{allow: public}]) {
   id: ID!
-  newMessages: Int
   LastMessage: Message @connection
   Messages: [Message] @connection(keyName: "byChatRoom", fields: ["id"])
   ChatRoomUsers: [ChatRoomUser] @connection(keyName: "byChatRoom", fields: ["id"])
+  newMessage: Int
 }
 
 type User @model @auth(rules: [{allow: public}]) {
