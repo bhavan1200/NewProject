@@ -1,5 +1,8 @@
 import React,{useState} from  'react'
-import { View, Text, TextInput, Pressable, KeyboardAvoidingView, Platform } from 'react-native'
+import { View, Text, TextInput, Pressable, KeyboardAvoidingView, Platform } from 'react-native';
+import { DataStore } from '@aws-amplify/datastore';
+import { Auth } from '@aws-amplify/auth';
+import { ChatRoom, User, ChatRoomUser, Message } from "../../../models"
 import styles from './styles';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import Feather from 'react-native-vector-icons/Feather';
@@ -8,14 +11,27 @@ import AntDesign from 'react-native-vector-icons/AntDesign';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 
 
-const MessageInput = () => {
+const MessageInput = ({ chatRoom}) => {
+
 
     const [message, setMessage] = useState('');
 
-    const sendMessage = () => {
-        console.warn("Sending: ", message)
+    const sendMessage = async () => {
+        const user = await Auth.currentAuthenticatedUser()
+        const newMessage = await DataStore.save( new Message({
+            content:message,
+            userID: user.attributes.sub,
+            chatroomID: chatRoom.id,
+        }))
+        updateLastMessage(newMessage)
         setMessage('');
     };
+
+    const updateLastMessage = async (newMessage) => {
+       DataStore.save(ChatRoom.copyOf(chatRoom, updatedChatRoom => {
+           updatedChatRoom.LastMessage = newMessage;
+       }))
+    }
 
     const onPlusClicked = () => {
        console.warn("OnPlusClicked")
