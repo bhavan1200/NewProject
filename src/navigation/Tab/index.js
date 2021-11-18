@@ -25,6 +25,7 @@ const index = () => {
         <Tab.Navigator
            initialRouteName= "ChatStack"
            screenOptions={({route}) => ({
+             headerShown: false,
                tabBarIcon: ({ focused, color, size }) => {
             let iconName;
 
@@ -52,7 +53,7 @@ const index = () => {
             }
 
           },
-          headerShown: false,
+          
           tabBarActiveTintColor: 'tomato',
           tabBarInactiveTintColor: '#000',
           tabBarShowLabel: false,

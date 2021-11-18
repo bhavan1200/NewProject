@@ -17,11 +17,10 @@ const AppStack = createNativeStackNavigator();
 const Message = () => {
   return (
     <NavigationContainer>
-      <AppStack.Navigator>
+      <AppStack.Navigator screenOptions={{ headerShown: false}}>
         <AppStack.Screen
           name="StackAndTab"
           component={StackAndTab}
-          options={{headerShown: false}}
         />
       </AppStack.Navigator>
     </NavigationContainer>

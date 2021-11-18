@@ -25,12 +25,23 @@ const MainChatScreen = () => {
         setChatRoom(chatRooms)
         }
         fetchChatRooms();
-    }, [])
+    }, []);
+
+//     useEffect(() => {
+//         const subscription = DataStore.observe(ChatRoom).subscribe(msg => {
+//   console.log(msg.model, msg.opType, msg.element);
+//   if(msg.model === ChatRoomUser && msg.opType === "INSERT"){
+//       setChatRoom(existingChatRoom => [msg.element, ...existingChatRoom])
+//   }
+//   });
+//   return() => subscription.unsubscribe();
+//     }, [])
 
 
     // const logOut = () => {
     //     Auth.signOut();
     // } 
+
 
     return (
         <View style={styles.page}>

@@ -18,7 +18,6 @@ const ChatRoomScreen = () => {
 
     const route = useRoute();
     const navigation = useNavigation()
-    navigation.setOptions({ title: "Elon Musk"})
 
     useEffect(() => {
         fetchChatRoom();
