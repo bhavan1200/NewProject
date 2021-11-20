@@ -2,10 +2,21 @@ import { StyleSheet } from "react-native";
 
 const styles = StyleSheet.create({
     root: {
-       flexDirection: "row",
        padding: 10,
     },
-    
+    sendImageContainer: {
+    flexDirection: "row",
+    margin: 10,
+    alignSelf: "stretch",
+    justifyContent: "space-between",
+    marginVertical: 10,
+    borderWidth: 1,
+    borderColor: "lightgrey",
+    borderRadius: 10,
+  },
+    row: {
+      flexDirection: "row"
+    },
     inputContainer: {
       backgroundColor: "#f2f2f2",
       flex: 1,
