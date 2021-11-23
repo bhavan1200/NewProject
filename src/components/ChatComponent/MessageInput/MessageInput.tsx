@@ -47,6 +47,7 @@ const MessageInput = ({ chatRoom}) => {
             content:message,
             userID: user.attributes.sub,
             chatroomID: chatRoom.id,
+            status: "SENT"
         }))
         updateLastMessage(newMessage)
         
@@ -84,7 +85,7 @@ const MessageInput = ({ chatRoom}) => {
         compressImageQuality: 0.6,
         mediaType: 'photo',
       }).then(image => {
-        console.log(image);
+        // console.log(image);
         setImage(image.path);
       });
     };
@@ -97,7 +98,7 @@ const MessageInput = ({ chatRoom}) => {
         compressImageQuality: 0.6,
         mediaType: 'photo',
       }).then(image => {
-        console.log(image);
+        // console.log(image);
         setImage(image.path);
       });
     };
@@ -134,6 +135,7 @@ const MessageInput = ({ chatRoom}) => {
         userID: user.attributes.sub,
         chatroomID: chatRoom.id,
         audio: "None",
+        status: "SENT",
         // replyToMessageID: messageReplyTo?.id,
         video: "None"
       }),
