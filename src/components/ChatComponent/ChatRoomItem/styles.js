@@ -1,9 +1,6 @@
 import { StyleSheet } from "react-native";
 
 const styles = StyleSheet.create({
-    page: {
-
-    },
     container: {
        flexDirection: "row",
        padding: 10,

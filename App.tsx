@@ -1,4 +1,4 @@
-import React, {useEffect} from 'react';
+import React, {useState, useEffect} from 'react';
 import {View, Text, Button} from 'react-native';
 import store from './src/App/store';
 import {Provider} from 'react-redux';
@@ -18,7 +18,7 @@ const AppStack = createNativeStackNavigator();
 const AppSupporter = () => {
   return (
     <NavigationContainer>
-      <AppStack.Navigator screenOptions={{ headerShown: false}}>
+      <AppStack.Navigator screenOptions={{ headerShown: false }}>
         <AppStack.Screen
           name="StackAndTab"
           component={StackAndTab}
@@ -29,38 +29,6 @@ const AppSupporter = () => {
 };
 
 const App = () => {
-
-  // useEffect(() => {
-  //   const authUser = async () => {
-  //     const usr = await Auth.currentAuthenticatedUser();
-  //     console.log(usr);
-  //   }
-  //   authUser();
-  // }, [])
-
-  useEffect(() => {
-    // Create listener
-const listener = Hub.listen('datastore', async hubData => {
-  const  { event, data } = hubData.payload;
-  if (event === 'networkStatus') {
-    console.log(`User has a network connection: ${data.active}`)
-  }
-  if(event === "outboxMutationProcessed"
-     && data.model === Message
-     && !([ "DELIVERED", "READ"].includes(data.element.status))){
-      //set message status to delivered
-      DataStore.save(
-        Message.copyOf(data.element, (updated) => {
-          updated.status = "DELIVERED";
-        })
-      )
-    
-  }
-})
-
-// Remove listener
-return () => listener();
-  }, []);
 
 
   return (

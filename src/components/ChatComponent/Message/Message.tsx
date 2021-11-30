@@ -3,7 +3,7 @@ import { DataStore } from '@aws-amplify/datastore';
 import { Auth } from '@aws-amplify/auth';
 import { User, Message as MessageModel } from "../../../models"
 import {View, Text, ActivityIndicator, useWindowDimensions} from 'react-native';
-import { S3Image } from "aws-amplify-react-native"
+import { S3Image } from "aws-amplify-react-native";
 import styles from './styles';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 
@@ -14,6 +14,7 @@ const grey = 'lightgrey';
 const myID = "u1"
 
 const Message = (props) => {
+  
 
   const [message, setMessage] = useState<MessageModel>(props.message)
   const [user, setUser] = useState<User|undefined>();
