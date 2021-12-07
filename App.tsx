@@ -16,6 +16,8 @@ Amplify.configure(config);
 const AppStack = createNativeStackNavigator();
 
 const AppSupporter = () => {
+
+ 
   return (
     <NavigationContainer>
       <AppStack.Navigator screenOptions={{ headerShown: false }}>
@@ -29,6 +31,14 @@ const AppSupporter = () => {
 };
 
 const App = () => {
+
+  // useEffect(() => {
+  //    const authUser = async () => {
+  //   currUser = await Auth.currentAuthenticatedUser();
+  //   console.log(currUser)
+  // }
+  // authUser();
+  // }, [])
 
 
   return (
