@@ -8846,11 +8846,6 @@
   "resolved" "https://registry.npmjs.org/expo-modules-core/-/expo-modules-core-0.2.0.tgz"
   "version" "0.2.0"
 
-"expo-modules@^0.0.0":
-  "integrity" "sha512-RsXPsVjxeLIr2AKE9YWIcVhuDvA446DaUP8J9yoQ2VA7DfcgNQdx2ZNpXfy3CI45AFJjtEqFKJ46Vnb3asM/OQ=="
-  "resolved" "https://registry.npmjs.org/expo-modules/-/expo-modules-0.0.0.tgz"
-  "version" "0.0.0"
-
 "express@^4.17.1":
   "integrity" "sha512-mHJ9O79RqluphRrcw2X/GTh3k9tVv8YcoyY4Kkh4WDMUYKRZUq0h1o0w2rrrxBqM7VoeUVqgb27xlEMXTnYt4g=="
   "resolved" "https://registry.npmjs.org/express/-/express-4.17.1.tgz"

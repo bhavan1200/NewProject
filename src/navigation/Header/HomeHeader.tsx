@@ -12,7 +12,6 @@ const HomeHeader = (props) => {
 
     const navigation = useNavigation();
 
-    console.log(navigation);
 
     return (
         <View style={{

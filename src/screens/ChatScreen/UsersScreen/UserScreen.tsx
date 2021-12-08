@@ -10,7 +10,21 @@ import { useSelector } from 'react-redux'
 
 const UsersScreen = () => {
 
-    const chatRoomData = useSelector((state) => state.users)
+    const [users, setUsers] = useState<User[]>([]);
+
+    useEffect(() => {
+        DataStore.query(User).then(setUsers);
+    }, [])
+
+    // useEffect(() => {
+    //     const fetchUsers = async () => {
+    //        const fetchedUsers = await DataStore.query(User);
+    //        setUsers(fetchedUsers)
+    //     }
+    //     fetchUsers();
+    // }, [])
+
+    // const chatRoomData = useSelector((state) => state.users)
 
     // useEffect(() => {
     //    const fetchMessage = async () => {
@@ -30,7 +44,7 @@ const UsersScreen = () => {
     return (
         <View style={styles.page}>
             <FlatList 
-              data={chatRoomData}
+              data={users}
               renderItem={({item}) => <UserItem user={item} /> }
               keyExtractor={item => item.id} 
               showsVerticalScrollIndicator={false}     
