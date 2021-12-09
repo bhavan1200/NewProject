@@ -3,7 +3,7 @@ import React, { useEffect, useState } from 'react'
 import { View, Text, Image, FlatList } from 'react-native';
 import ChatRoomItem from "../../../Components/chatComponent/ChatRoomItem"
 import Amplify, {DataStore, Hub, Auth, Predicates} from "aws-amplify";
-import { ChatRoom, ChatRoomUser } from '../../../models';
+import { ChatRoom, ChatRoomUser, MessageModel } from '../../../models';
 import styles from "./styles";
 import { useWindowDimensions } from 'react-native';
 import { useSelector } from 'react-redux'
@@ -20,12 +20,20 @@ const HomeChatScreen = () => {
               .filter(ChatRoomUser => ChatRoomUser.user.id === authUser.attributes.sub)
               .map(ChatRoomUser => ChatRoomUser.chatroom)
             setChatRooms(fetchedChatRooms);
-            // console.log(fetchedChatRooms)
         }
         fetchChatRooms();
-    }, [])
+    }, []);
 
-    const chatRoomData = useSelector((state) => state.chatRooms)
+     useEffect(() => {
+    const subscription = DataStore.observe(MessageModel).subscribe(msg => {
+     console.log(msg.model, msg.opType, msg.element);
+     if(msg.model === MessageModel && msg.opType === "INSERT"){
+       setMessages(existingMessages => [msg.element, ...existingMessages])
+     }
+    });
+    return () => subscription.unsubscribe();
+  }, [])
+
 
     // useEffect(() => {
     //    const fetchMessage = async () => {

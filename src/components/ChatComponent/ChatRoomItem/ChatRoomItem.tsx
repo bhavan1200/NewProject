@@ -9,6 +9,7 @@ const ChatRoomItem = ({chatRooms}) => {
 
     // const [users, setUsers] = useState<Users[]>([])//All users in the chatroom
     const [user, setUser] = useState<Users|null>(null)//Display User
+    const [lastMessage, setLastMessage] = useState<Message|undefined>()
 
     const navigation = useNavigation();
 
@@ -26,6 +27,13 @@ const ChatRoomItem = ({chatRooms}) => {
             setUser(fetchedUsers.find(user => user.id !== authUser.attributes.sub) || null);
         }
         fetchUser();
+    }, []);
+
+    useEffect(() => {
+        if(!chatRooms.chatRoomLastMessageId){
+            return;
+        }
+        DataStore.query(Message, chatRooms.chatRoomLastMessageId).then(setLastMessage)
     }, [])
 
     if(!user){
@@ -43,17 +51,17 @@ const ChatRoomItem = ({chatRooms}) => {
                     />
                 </View>
 
-                {!!chatRooms.newMessages && <View style={styles.badgeContainer}>
-                <Text style={styles.badgeText}>{chatRooms.newMessages}</Text>
+                {!!chatRooms.newMessage && <View style={styles.badgeContainer}>
+                <Text style={styles.badgeText}>{chatRooms.newMessage}</Text>
                 </View>}
 
                 <View style={styles.rightContainer}>
                     <View style={styles.row}>
                         <Text style={styles.name}>{user.name}</Text>
-                        <Text style={styles.text}>{chatRooms.lastMessage?.createdAt}</Text>
+                        <Text style={styles.text}>{lastMessage?.createdAt}</Text>
                     </View>
                     <View>
-                        <Text numberOfLines={1} style={styles.text}>{chatRooms.lastMessage?.content}</Text>
+                        <Text numberOfLines={1} style={styles.text}>{lastMessage?.content}</Text>
                     </View>
                 </View>
             </Pressable>

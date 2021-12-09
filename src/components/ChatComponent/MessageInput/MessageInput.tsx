@@ -42,15 +42,28 @@ const MessageInput = ({ chatRoom}) => {
 
 
     const sendMessage = async () => {
-       console.log("send") 
-       setMessage('')
+      const user = await Auth.currentAuthenticatedUser();
+
+      const newMessage =await DataStore.save(new Message({
+        content: message,
+        userID: user.attributes.sub,
+        chatroomID: chatRoom.id,
+        image:null,
+        audio: null,
+        video: null,
+        status: null,
+        replyToMessageId: null,
+      }))
+      updateLastMessage(newMessage)
+
+      setMessage('')
     };
 
-  //   const updateLastMessage = async (newMessage) => {
-  //      DataStore.save(ChatRoom.copyOf(chatRoom, updatedChatRoom => {
-  //          updatedChatRoom.LastMessage = newMessage;
-  //      }))
-  //   }
+    const updateLastMessage = async (newMessage) => {
+       DataStore.save(ChatRoom.copyOf(chatRoom, updatedChatRoom => {
+           updatedChatRoom.LastMessage = newMessage;
+       }))
+    }
 
     const onPlusClicked = () => {
        console.warn("OnPlusClicked")

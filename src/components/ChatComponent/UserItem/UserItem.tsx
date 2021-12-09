@@ -15,46 +15,46 @@ const UserItem = ({user}) => {
         //these two user then redirect to existing chatroom 
         //otherwise create new chatroom with these user
 
-         const authUser = await Auth.currentAuthenticatedUser();
-         const dbUser = await DataStore.query(User, authUser.attributes.sub)
+        //  const authUser = await Auth.currentAuthenticatedUser();
+        //  const dbUser = await DataStore.query(User, authUser.attributes.sub)
 
-         const existingChatRoom = await DataStore.query(ChatRoom)
-         const existingChatRoomUser = (await DataStore.query(ChatRoomUser, existingChatRoom.id))
-         .filter(existingChatRoomUser => existingChatRoomUser.user.id === user.id)
+        //  const existingChatRoom = await DataStore.query(ChatRoom)
+        //  const existingChatRoomUser = (await DataStore.query(ChatRoomUser, existingChatRoom.id))
+        //  .filter(existingChatRoomUser => existingChatRoomUser.user.id === user.id)
          
-         console.log(existingChatRoomUser);
+        //  console.log(existingChatRoomUser);
          
-         if (existingChatRoomUser[0] !== undefined){
-            navigation.navigate("ChatRoomScreen", {id: existingChatRoomUser[0].chatroom.id})
-         } else {
-             console.log("Geelo")
-         }
+        //  if (existingChatRoomUser[0] !== undefined){
+        //     navigation.navigate("ChatRoomScreen", {id: existingChatRoomUser[0].chatroom.id})
+        //  } else {
+        //      console.log("Geelo")
+        //  }
 
         // const existingUser = await DataStore.query(ChatRoomUser, existingChatRoom.id)
         
 
 
         // Create a ChatRoom 
-        // const newChatRoom = await DataStore.save(new ChatRoom({
-        //     newMessage: 0,
-        // }));
+        const newChatRoom = await DataStore.save(new ChatRoom({
+            newMessage: 0,
+        }));
 
         //connect auth user with the chatroom
-        // const authUser = await Auth.currentAuthenticatedUser();
-        // const dbUser = await DataStore.query(User, authUser.attributes.sub)
-        // await DataStore.save(new ChatRoomUser({
-        //     user: dbUser,
-        //     chatroom: newChatRoom,
+        const authUser = await Auth.currentAuthenticatedUser();
+        const dbUser = await DataStore.query(User, authUser.attributes.sub)
+        await DataStore.save(new ChatRoomUser({
+            user: dbUser,
+            chatroom: newChatRoom,
 
-        // }))
+        }))
          
         //connect clicked user with the chatroom
-        // await DataStore.save(new ChatRoomUser({
-        //     user,
-        //     chatroom: newChatRoom,
-        // }))
+        await DataStore.save(new ChatRoomUser({
+            user,
+            chatroom: newChatRoom,
+        }))
         
-        // navigation.navigate("ChatRoomScreen", {id: newChatRoom.id})
+        navigation.navigate("ChatRoomScreen", {id: newChatRoom.id})
     }
     
     return (
