@@ -42,7 +42,7 @@ const ChatRoomScreen = () => {
         return;
       }
       const chatRoom = await DataStore.query(ChatRoom, route.params.id)
-      if(!chatRoom){
+       if(!chatRoom){
         console.error("couldn't find chatroom with this id")
       }else {
         setChatRoom(chatRoom)
@@ -73,8 +73,8 @@ const ChatRoomScreen = () => {
     <View style={styles.page}>
         <FlatList 
                 data={messages}
+                keyExtractor={item => item.id}
                 renderItem={({item}) => <Message message={item} /> }
-                keyExtractor={item => item.id} 
                 showsVerticalScrollIndicator={false}  
                 inverted   
         />

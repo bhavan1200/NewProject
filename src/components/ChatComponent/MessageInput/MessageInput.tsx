@@ -10,7 +10,7 @@ import Feather from 'react-native-vector-icons/Feather';
 import SimpleLineIcons from 'react-native-vector-icons/SimpleLineIcons';
 import AntDesign from 'react-native-vector-icons/AntDesign';
 import Ionicons from 'react-native-vector-icons/Ionicons';
-import EmojiSelector from 'react-native-emoji-selector';
+import EmojiSelector, { Categories } from "react-native-emoji-selector";
 import ImagePicker from 'react-native-image-crop-picker';
 import {v4 as uuidv4} from 'uuid';
 
@@ -20,7 +20,7 @@ const MessageInput = ({ chatRoom}) => {
 
 
     const [message, setMessage] = useState('');
-  //   const [isEmojiPickerOpen, setIsEmojiPickerOpen] = useState(false)
+    const [isEmojiPickerOpen, setIsEmojiPickerOpen] = useState(false)
   //   const [image, setImage] = useState<string | null>(null);
   //   const [progress, setProgress] = useState(0);
 
@@ -57,6 +57,7 @@ const MessageInput = ({ chatRoom}) => {
       updateLastMessage(newMessage)
 
       setMessage('')
+      setIsEmojiPickerOpen(false)
     };
 
     const updateLastMessage = async (newMessage) => {
@@ -160,7 +161,7 @@ const MessageInput = ({ chatRoom}) => {
 
       return (
         <KeyboardAvoidingView
-          style={styles.root}
+          style={[styles.root, { height : isEmojiPickerOpen ? "60%" : "auto"}]}
           behavior={Platform.OS === "ios" ? "padding" : "height"}
           keyboardVerticalOffset={100}
         >
@@ -202,7 +203,7 @@ const MessageInput = ({ chatRoom}) => {
 
           <View style={styles.row}>
             <View style={styles.inputContainer}>
-            <Pressable onPress={onPress}>
+            <Pressable onPress={() => setIsEmojiPickerOpen((currentValue) => !currentValue)}>
               <SimpleLineIcons name="emotsmile" size={24} color="grey" style={styles.icon} />
             </Pressable>
                 
@@ -222,7 +223,11 @@ const MessageInput = ({ chatRoom}) => {
                   <Feather name="camera" size={24} color="grey" style={styles.icon} />
                 </Pressable>
                 
-             <MaterialCommunityIcons name="microphone-outline" size={24} color="grey" style={styles.icon} />
+             <MaterialCommunityIcons 
+               name="microphone-outline" 
+               size={24} color="grey" 
+               style={styles.icon}
+              />
             </View>
 
             <Pressable onPress={onPress} style={styles.buttonContainer}>
@@ -230,10 +235,16 @@ const MessageInput = ({ chatRoom}) => {
              : <AntDesign name="plus" size={24} color="#fff" style={styles.icon} />}
             </Pressable>
           </View>
-            {/* {isEmojiPickerOpen && (
+            {isEmojiPickerOpen && (
                 Keyboard.addListener("keyboardDidHide"),
-              <EmojiSelector onEmojiSelected={emoji => setMessage(currentMessage => currentMessage + emoji)} columns={8}/>
-            )} */}
+              <EmojiSelector
+                onEmojiSelected={emoji => setMessage(currentMessage => currentMessage + emoji)} 
+                columns={9}
+                category={Categories.emotion}
+                showSearchBar= {false}
+                showSectionTitles	={false}
+              />
+            )}
         </KeyboardAvoidingView>
     )
 }
