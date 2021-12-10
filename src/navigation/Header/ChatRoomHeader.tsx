@@ -7,7 +7,7 @@ import { User, ChatRoomUser } from "../../models"
 
 
 
-const ChatRoomHeader = (props) => {
+const ChatRoomHeader = ({id, children}) => {
 
 
  const [user, setUser] = useState<User|null>(null); 
@@ -15,6 +15,9 @@ const ChatRoomHeader = (props) => {
   const { width } = useWindowDimensions();
 
   useEffect(() => {
+    if(!id){
+      return;
+    }
         const fetchUsers = async () => {
           const fetchedUsers = (await DataStore.query(ChatRoomUser))
           .filter(chatRoomUser => chatRoomUser.chatroom.id === id)
@@ -40,7 +43,7 @@ const ChatRoomHeader = (props) => {
         style={{width: 30, height: 30, borderRadius: 30}} 
         source={{uri: user?.imageUri}}
       />
-      <Text style={{flex: 1, marginLeft: 13, fontWeight: "bold"}}>Yup</Text>
+      <Text style={{flex: 1, marginLeft: 13, fontWeight: "bold"}}>{user?.name}</Text>
       <View style={{flexDirection: "row"}}>
       <Feather name="camera" size={24} color="black" style={{marginHorizontal: 7,}}/>
       <Feather name="edit-2" size={24} color="black" style={{marginHorizontal: 18,}}/>

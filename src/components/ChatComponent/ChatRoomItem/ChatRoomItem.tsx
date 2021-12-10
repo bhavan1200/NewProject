@@ -8,7 +8,8 @@ import { useNavigation } from '@react-navigation/native';
 const ChatRoomItem = ({chatRooms}) => {
 
     // const [users, setUsers] = useState<Users[]>([])//All users in the chatroom
-    const [user, setUser] = useState<Users|null>(null)//Display User
+    const [user, setUser] = useState<User|undefined>();
+    const [isMe, setIsMe] = useState<boolean>(false)
     const [lastMessage, setLastMessage] = useState<Message|undefined>()
 
     const navigation = useNavigation();
@@ -16,6 +17,7 @@ const ChatRoomItem = ({chatRooms}) => {
     const onPress = () => {
         navigation.navigate("ChatRoomScreen", { id: chatRooms.id})
     }
+    
 
     useEffect(() => {
         const fetchUser = async () => {

@@ -29,7 +29,7 @@ const ChatRoomScreen = () => {
   useEffect(() => {
     const subscription = DataStore.observe(MessageModel).subscribe(msg => {
     //  console.log(msg.model, msg.opType, msg.element);
-     if(msg.model === MessageModel && msg.opType === "INSERT"){
+     if(msg.model === MessageModel && msg.opType === "UPDATE"){
        setMessages(existingMessages => [msg.element, ...existingMessages])
      }
     });
@@ -52,18 +52,16 @@ const ChatRoomScreen = () => {
     const fetchMessages = async () => {
       if(!chatRoom){
       return;
-    }
+      }
       const fetchedMessages = await DataStore.query(MessageModel, 
         message => message.chatroomID("eq", chatRoom?.id),
         {
           sort: message => message.createdAt(SortDirection.DESCENDING)
         }
         );
-        console.log(fetchedMessages);
       setMessages(fetchedMessages);
     };
   
-  navigation.setOptions({title: "Hello"});
 
   if(!chatRoom){
     return(

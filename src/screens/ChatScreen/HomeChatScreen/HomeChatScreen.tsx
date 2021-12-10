@@ -12,6 +12,7 @@ const HomeChatScreen = () => {
 
     const [chatRooms, setChatRooms] = useState<ChatRoom[]>([]);
 
+
     useEffect(() => {
         const fetchChatRooms = async () => {
             const authUser = await Auth.currentAuthenticatedUser();
@@ -24,15 +25,7 @@ const HomeChatScreen = () => {
         fetchChatRooms();
     }, []);
 
-     useEffect(() => {
-    const subscription = DataStore.observe(MessageModel).subscribe(msg => {
-     console.log(msg.model, msg.opType, msg.element);
-     if(msg.model === MessageModel && msg.opType === "INSERT"){
-       setMessages(existingMessages => [msg.element, ...existingMessages])
-     }
-    });
-    return () => subscription.unsubscribe();
-  }, [])
+    
 
 
     // useEffect(() => {
