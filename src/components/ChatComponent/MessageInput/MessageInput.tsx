@@ -21,8 +21,8 @@ const MessageInput = ({ chatRoom}) => {
 
     const [message, setMessage] = useState('');
     const [isEmojiPickerOpen, setIsEmojiPickerOpen] = useState(false)
-  //   const [image, setImage] = useState<string | null>(null);
-  //   const [progress, setProgress] = useState(0);
+    const [image, setImage] = useState<string | null>(null);
+    const [progress, setProgress] = useState(0);
 
   //   const [keyboardStatus, setKeyboardStatus] = useState(undefined);
 
@@ -56,8 +56,7 @@ const MessageInput = ({ chatRoom}) => {
       }))
       updateLastMessage(newMessage)
 
-      setMessage('')
-      setIsEmojiPickerOpen(false)
+      resetFields()
     };
 
     const updateLastMessage = async (newMessage) => {
@@ -71,7 +70,10 @@ const MessageInput = ({ chatRoom}) => {
     }
 
     const onPress = () => {
-       if(message){
+      if(image){
+        sendImage();
+      }
+       else if(message){
             sendMessage();
         } else{
             onPlusClicked()
@@ -79,83 +81,83 @@ const MessageInput = ({ chatRoom}) => {
         
     }
 
-  //   const choosePhotoFromLiabrary = async () => {
-  //     await ImagePicker.openPicker({
-  //       width: 300,
-  //       height: 400,
-  //       cropping: true,
-  //       compressImageQuality: 0.6,
-  //       mediaType: 'photo',
-  //     }).then(image => {
-  //       // console.log(image);
-  //       setImage(image.path);
-  //     });
-  //   };
+    const choosePhotoFromLiabrary = async () => {
+      await ImagePicker.openPicker({
+        width: 300,
+        height: 400,
+        cropping: true,
+        compressImageQuality: 0.6,
+        mediaType: 'photo',
+      }).then(image => {
+        // console.log(image);
+        setImage(image.path);
+      });
+    };
 
-  //   const selectPhotoFromCamera = async () => {
-  //     await ImagePicker.openCamera({
-  //       width: 300,
-  //       height: 400,
-  //       cropping: true,
-  //       compressImageQuality: 0.6,
-  //       mediaType: 'photo',
-  //     }).then(image => {
-  //       // console.log(image);
-  //       setImage(image.path);
-  //     });
-  //   };
+    const selectPhotoFromCamera = async () => {
+      await ImagePicker.openCamera({
+        width: 300,
+        height: 400,
+        cropping: true,
+        compressImageQuality: 0.6,
+        mediaType: 'photo',
+      }).then(image => {
+        // console.log(image);
+        setImage(image.path);
+      });
+    };
 
-  //   const resetFields = () => {
-  //     setMessage("");
-  //     setIsEmojiPickerOpen(false);
-  //     setImage(null);
-  //     setProgress(0);
-  //     // setSoundURI(null);
-  //     // removeMessageReplyTo();
-  //   };
+    const resetFields = () => {
+      setMessage("");
+      setIsEmojiPickerOpen(false);
+      setImage(null);
+      setProgress(0);
+      // setSoundURI(null);
+      // removeMessageReplyTo();
+    };
 
   
-  //   const progressCallback = progress => {
-  //     setProgress(progress.loaded / progress.total);
-  //   };
+    const progressCallback = progress => {
+      setProgress(progress.loaded / progress.total);
+    };
 
-  // const sendImage = async () => {
-  //   if (!image) {
-  //     console.warn("cant perform task")
-  //     return;
-  //   }
-  //   const blob = await getBlob(image);
-  //   const { key } = await Storage.put(`${uuidv4()}.png`, blob, {
-  //     progressCallback,
-  //   });
+  const sendImage = async () => {
+    if (!image) {
+      console.warn("cant perform task")
+      return;
+    }
+    const blob = await getBlob(image);
+    const { key } = await Storage.put(`${uuidv4()}.png`, blob, {
+      progressCallback,
+    });
 
-  // const user = await Auth.currentAuthenticatedUser();
-  //   const newMessage = await DataStore.save(
-  //     new Message({
-  //       content: message,
-  //       image: key,
-  //       userID: user.attributes.sub,
-  //       chatroomID: chatRoom.id,
-  //       audio: "None",
-  //       status: "SENT",
-  //       // replyToMessageID: messageReplyTo?.id,
-  //       video: "None"
-  //     }),
-  //   );
+    const user = await Auth.currentAuthenticatedUser();
+    const newMessage = await DataStore.save(
+      new Message({
+        content: message,
+        image: key,
+        userID: user.attributes.sub,
+        chatroomID: chatRoom.id,
+        audio: "None",
+        status: "SENT",
+        // replyToMessageID: messageReplyTo?.id,
+        video: "None"
+      }),
+    );
 
-  //   updateLastMessage(newMessage);
+    updateLastMessage(newMessage);
 
-  //   resetFields();
-  // };
+    resetFields();
+  };
 
-  // const getBlob = async () => {
-  //   //  if(!image) {
-  //   //    return null;
-  //   //  }
-  //   const response = await fetch(image);
-  //   const blob = await response.blob();
-  //   return blob;
-  // };
+  const getBlob = async () => {
+    //  if(!image) {
+    //    return null;
+    //  }
+      const response = await fetch(image);
+      const blob = await response.blob();
+      return blob;
+  };
 
 
 
@@ -166,7 +168,7 @@ const MessageInput = ({ chatRoom}) => {
           keyboardVerticalOffset={100}
         >
 
-        {/* {image && (
+        {image && (
         <View style={styles.sendImageContainer}>
           <Image
             source={{uri: image}}
@@ -198,7 +200,7 @@ const MessageInput = ({ chatRoom}) => {
             />
           </Pressable>
         </View>
-      )} */}
+      )}
 
 
           <View style={styles.row}>
@@ -215,11 +217,11 @@ const MessageInput = ({ chatRoom}) => {
                   onChangeText={setMessage}
                 //   onSelectionChange={Keyboard.dismiss}
                 />
-                <Pressable onPress={onPress}>
+                <Pressable onPress={choosePhotoFromLiabrary}>
                   <Feather name="image" size={24} color="grey" style={styles.icon} />
                 </Pressable>
 
-                <Pressable onPress={onPress}>
+                <Pressable onPress={selectPhotoFromCamera}>
                   <Feather name="camera" size={24} color="grey" style={styles.icon} />
                 </Pressable>
                 
@@ -231,7 +233,8 @@ const MessageInput = ({ chatRoom}) => {
             </View>
 
             <Pressable onPress={onPress} style={styles.buttonContainer}>
-            {message ? <Ionicons name="send" size={18} color="#fff" style={styles.icon} />
+            {message|| image ? 
+               <Ionicons name="send" size={18} color="#fff" style={styles.icon} />
              : <AntDesign name="plus" size={24} color="#fff" style={styles.icon} />}
             </Pressable>
           </View>

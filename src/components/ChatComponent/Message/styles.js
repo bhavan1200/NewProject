@@ -7,7 +7,8 @@ const styles = StyleSheet.create({
         borderRadius:10,
         maxWidth: "75%",
         flexDirection: "row",
-        alignItems: "flex-end",
+        alignItems: "flex-start",
+        flexDirection: "column"
     },
     leftContainer: {
         backgroundColor:"#3777f0",
