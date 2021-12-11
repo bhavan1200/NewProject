@@ -4,6 +4,7 @@ import styles from "./styles";
 import Amplify, {DataStore, Hub, Auth, Predicates} from "aws-amplify";
 import { User, Message, ChatRoom, ChatRoomUser } from '../../../models';
 import { useNavigation } from '@react-navigation/native';
+import moment from "moment";
 
 const ChatRoomItem = ({chatRooms}) => {
 
@@ -42,7 +43,9 @@ const ChatRoomItem = ({chatRooms}) => {
         return(
             <ActivityIndicator />
         )
-    }
+    };
+
+    const time = moment(lastMessage?.createdAt).from(moment())
     return (
         <Pressable onPress={onPress} style={styles.container}>
 
@@ -60,7 +63,7 @@ const ChatRoomItem = ({chatRooms}) => {
                 <View style={styles.rightContainer}>
                     <View style={styles.row}>
                         <Text style={styles.name}>{user.name}</Text>
-                        <Text style={styles.text}>{lastMessage?.createdAt}</Text>
+                        <Text style={styles.text}>{time}</Text>
                     </View>
                     <View>
                         <Text numberOfLines={1} style={styles.text}>{lastMessage?.content}</Text>

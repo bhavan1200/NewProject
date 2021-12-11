@@ -17,6 +17,29 @@ const AppStack = createNativeStackNavigator();
 
 const AppSupporter = () => {
 
+  useEffect(() => {
+    // Create listener
+    const listener = Hub.listen('datastore', async hubData => {
+    const  { event, data } = hubData.payload;
+    if (event === 'networkStatus') {
+      console.log(`User has a network connection: ${data.active}`)
+    }
+    if(event === "outboxMutationProcessed" 
+        && data.model === Message 
+        && !(["DELIVERED", "READ"].includes(data.element.status))
+      ){
+          //set Messag status to delivered
+          DataStore.save(
+            Message.copyOf(data.element, (updated) => {
+              updated.status = "DELIVERED";
+            }))
+    }
+})
+
+// Remove listener
+  return () => listener();  
+  }, [])
+
  
   return (
     <NavigationContainer>

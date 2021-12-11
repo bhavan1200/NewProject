@@ -26,15 +26,16 @@ const ChatRoomScreen = () => {
     fetchMessages();
   }, [chatRoom]);
 
-  useEffect(() => {
-    const subscription = DataStore.observe(MessageModel).subscribe(msg => {
-    //  console.log(msg.model, msg.opType, msg.element);
-     if(msg.model === MessageModel && msg.opType === "UPDATE"){
-       setMessages(existingMessages => [msg.element, ...existingMessages])
-     }
+   useEffect(() => {
+    const subscription = DataStore.observe(MessageModel).subscribe((msg) => {
+      // console.log(msg.model, msg.opType, msg.element);
+      if (msg.model === MessageModel && msg.opType === "INSERT") {
+        setMessages((existingMessage) => [msg.element, ...existingMessage]);
+      }
     });
+
     return () => subscription.unsubscribe();
-  }, [])
+  }, []);
 
   const fetchChatRoom = async () => {
       if(!route.params.id){
