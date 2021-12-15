@@ -6,8 +6,17 @@ const styles = StyleSheet.create({
         margin: 10,
         borderRadius:10,
         maxWidth: "75%",
+        
+        
+    },
+    row: {
         flexDirection: "row",
         alignItems: "flex-end",
+    },
+    messageReply: {
+        backgroundColor: "gray",
+        padding: 5,
+        borderRadius: 5,
     },
     leftContainer: {
         backgroundColor:"#3777f0",
@@ -18,6 +27,7 @@ const styles = StyleSheet.create({
         backgroundColor:"lightgrey",
         marginLeft: "auto",
         marginRight: 10,
+        alignItems: "flex-end",
     }
 });
 export default styles;

@@ -13,10 +13,11 @@ import Ionicons from 'react-native-vector-icons/Ionicons';
 import EmojiSelector, { Categories } from "react-native-emoji-selector";
 import ImagePicker from 'react-native-image-crop-picker';
 import {v4 as uuidv4} from 'uuid';
+import MessageComponent from "../Message"
 
 
 
-const MessageInput = ({ chatRoom}) => {
+const MessageInput = ({ chatRoom, messageReplyTo, removeMessageReplyTo}) => {
 
 
     const [message, setMessage] = useState('');
@@ -51,8 +52,8 @@ const MessageInput = ({ chatRoom}) => {
         image:null,
         audio: null,
         video: null,
-        status: null,
-        replyToMessageId: null,
+        status: "SENT",
+        replyToMessageId: messageReplyTo?.id,
       }))
       updateLastMessage(newMessage)
 
@@ -60,7 +61,7 @@ const MessageInput = ({ chatRoom}) => {
     };
 
     const updateLastMessage = async (newMessage) => {
-       DataStore.save(ChatRoom.copyOf(chatRoom, updatedChatRoom => {
+       await DataStore.save(ChatRoom.copyOf(chatRoom, updatedChatRoom => {
            updatedChatRoom.LastMessage = newMessage;
        }))
     }
@@ -113,7 +114,7 @@ const MessageInput = ({ chatRoom}) => {
       setImage(null);
       setProgress(0);
       // setSoundURI(null);
-      // removeMessageReplyTo();
+      removeMessageReplyTo();
     };
 
   
@@ -140,7 +141,7 @@ const MessageInput = ({ chatRoom}) => {
         chatroomID: chatRoom.id,
         audio: "None",
         status: "SENT",
-        // replyToMessageID: messageReplyTo?.id,
+        replyToMessageID: messageReplyTo?.id,
         video: "None"
       }),
     );
@@ -167,6 +168,29 @@ const MessageInput = ({ chatRoom}) => {
           behavior={Platform.OS === "ios" ? "padding" : "height"}
           keyboardVerticalOffset={100}
         >
+
+        {messageReplyTo && (
+          <View style={{
+              backgroundColor: "f2f2f2", 
+              justifyContent: "space-between", 
+              alignSelf: "stretch", 
+              padding: 5, 
+              flexDirection: "row"
+          }}>
+            <View style={{flex: 1}}>
+            <Text>Reply To :</Text>
+              <MessageComponent message={messageReplyTo}/>
+            </View>
+            <Pressable onPress={() => removeMessageReplyTo()}>
+            <AntDesign
+              name="close"
+              size={24}
+              color="black"
+              style={{margin: 5}}
+            />
+          </Pressable>
+          </View>
+        )}
 
         {image && (
         <View style={styles.sendImageContainer}>

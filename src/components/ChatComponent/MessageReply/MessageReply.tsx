@@ -1,102 +1,84 @@
-import React, {useState, useEffect} from 'react';
-import {
-  View,
-  Text,
-  StyleSheet,
-  ActivityIndicator,
-  Pressable,
-} from 'react-native';
-import {DataStore} from '@aws-amplify/datastore';
-import {User} from '../../../models';
-import {Auth, Storage} from 'aws-amplify';
+import React,{useState, useEffect} from  'react'
+import { View, Text, ActivityIndicator, useWindowDimensions, Pressable } from 'react-native';
+import styles from "./styles";
+import { useSelector } from 'react-redux';
+import { ChatRoom, User, ChatRoomUser, Message as MessageModel } from "../../../models";
+import { DataStore } from '@aws-amplify/datastore';
+import { Auth } from '@aws-amplify/auth';
+import { Storage } from '@aws-amplify/storage';
 import {S3Image} from 'aws-amplify-react-native';
-import {useWindowDimensions} from 'react-native';
-import {Ionicons} from '@expo/vector-icons';
-// import AudioPlayer from "../AudioPlayer";
-import {Message as MessageModel} from '../../../models';
-import styles from "./styles"
+import Ionicons from 'react-native-vector-icons/Ionicons';
 
-const blue = '#3777f0';
-const grey = 'lightgrey';
 
-const MessageReply =( props ) => {
-  const {message: propMessage} = props;
 
+const MessageReply = (props) => {
+
+  const { message : propMessage } = props;
+  
   const [message, setMessage] = useState<MessageModel>(propMessage);
-
-  const [user, setUser] = useState<User | undefined>();
+  const [user, setUser] = useState<User|undefined>();
   const [isMe, setIsMe] = useState<boolean | null>(null);
-  const [soundURI, setSoundURI] = useState<any>(null);
 
   const {width} = useWindowDimensions();
 
   useEffect(() => {
-    DataStore.query(User, message.userID).then(setUser);
+    DataStore.query(User, message.userID).then(setUser)
   }, []);
 
   useEffect(() => {
-    setMessage(propMessage);
+    setMessage(propMessage)
   }, [propMessage]);
 
-  useEffect(() => {
-    if (message.audio) {
-      Storage.get(message.audio).then(setSoundURI);
-    }
-  }, [message]);
 
   useEffect(() => {
     const checkIfMe = async () => {
-      if (!user) {
+      if(!user){
         return;
       }
       const authUser = await Auth.currentAuthenticatedUser();
-      setIsMe(user.id === authUser.attributes.sub);
-    };
+      setIsMe(user.id === authUser.attributes.sub)
+    }
     checkIfMe();
   }, [user]);
 
-  if (!user) {
-    return <ActivityIndicator />;
+  if(!user){
+    return(
+      <ActivityIndicator />
+    )
   }
 
   return (
-    <View
+    <View 
       style={[
-        styles.container,
-        isMe ? styles.rightContainer : styles.leftContainer,
-        {width: soundURI ? '75%' : 'auto'},
-      ]}>
-      <View style={styles.row}>
-        {message.image && (
-          <View style={{marginBottom: message.content ? 10 : 0}}>
-            <S3Image
-              imgKey={message.image}
-              style={{width: width * 0.65, aspectRatio: 4 / 3}}
-              resizeMode="contain"
+        styles.container, 
+        isMe ? styles.rightContainer : styles.leftContainer
+      ]}
+    >
+    <View style={styles.row}>
+      {message.image && (
+        <View style={{marginBottom: message.content ? 10 : 0}}>
+          <S3Image
+                imgKey={message.image}
+                style={{width: width * 0.65, aspectRatio: 4 / 3}}
             />
-          </View>
-        )}
-        {/* {soundURI && <AudioPlayer soundURI={soundURI} />}
-        {!!message.content && (
-          <Text style={{ color: isMe ? "black" : "white" }}>
-            {message.content}
-          </Text>
-        )} */}
+        </View>
+      )}
 
-        {isMe && !!message.status && message.status !== 'SENT' && (
-          <Ionicons
-            name={
-              message.status === 'DELIVERED' ? 'checkmark' : 'checkmark-done'
-            }
-            size={16}
-            color="gray"
-            style={{marginHorizontal: 5}}
-          />
-        )}
-      </View>
+      {!!message.content && (
+        <Text style={{color: isMe ? "black" : "#fff"}}>{message.content}</Text>
+      )}
+
+      {isMe && !!message.status  && message.status !== "SENT" && (
+        <Ionicons 
+          name={message.status === "DELIVERED"? "checkmark" :"checkmark-done"} 
+          size={20} 
+          color="gray" 
+          style={{marginHorizontal : 5}}
+        />
+      )}
     </View>
-  );
-};
-
+    </View>
+  )
+}
 
 export default MessageReply;

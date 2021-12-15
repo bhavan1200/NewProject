@@ -16,12 +16,12 @@ const styles = StyleSheet.create({
         borderRadius: 5,
       },
       leftContainer: {
-        backgroundColor: blue,
+        backgroundColor: "#3777f0",
         marginLeft: 10,
         marginRight: 'auto',
       },
       rightContainer: {
-        backgroundColor: grey,
+        backgroundColor: "lightgrey",
         marginLeft: 'auto',
         marginRight: 10,
         alignItems: 'flex-end',

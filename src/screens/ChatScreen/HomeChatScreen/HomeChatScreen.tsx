@@ -1,58 +1,39 @@
-import { useNavigation } from '@react-navigation/core'
-import React, { useEffect, useState } from 'react'
-import { View, Text, Image, FlatList } from 'react-native';
-import ChatRoomItem from "../../../Components/chatComponent/ChatRoomItem"
-import Amplify, {DataStore, Hub, Auth, Predicates} from "aws-amplify";
-import { ChatRoom, ChatRoomUser, MessageModel } from '../../../models';
+import React, { useState, useEffect } from "react";
+
+import { View, StyleSheet, FlatList } from "react-native";
+import { Auth, DataStore } from "aws-amplify";
+import { ChatRoom, ChatRoomUser } from "../../../models";
+import ChatRoomItem from "../../../Components/chatComponent/ChatRoomItem";
 import styles from "./styles";
-import { useWindowDimensions } from 'react-native';
-import { useSelector } from 'react-redux'
 
-const HomeChatScreen = () => {
+export default function TabOneScreen() {
+  const [chatRooms, setChatRooms] = useState<ChatRoom[]>([]);
 
-    const [chatRooms, setChatRooms] = useState<ChatRoom[]>([]);
+  useEffect(() => {
+    const fetchChatRooms = async () => {
+      const userData = await Auth.currentAuthenticatedUser();
 
+      const chatRooms = (await DataStore.query(ChatRoomUser))
+        .filter(
+          (chatRoomUser) => chatRoomUser.user.id === userData.attributes.sub
+        )
+        .map((chatRoomUser) => chatRoomUser.chatroom);
 
-    useEffect(() => {
-        const fetchChatRooms = async () => {
-            const authUser = await Auth.currentAuthenticatedUser();
-
-            const fetchedChatRooms = (await DataStore.query(ChatRoomUser))
-              .filter(ChatRoomUser => ChatRoomUser.user.id === authUser.attributes.sub)
-              .map(ChatRoomUser => ChatRoomUser.chatroom)
-            setChatRooms(fetchedChatRooms);
-        }
-        fetchChatRooms();
-    }, []);
-
-    
+      setChatRooms(chatRooms);
+    };
+    fetchChatRooms();
+  }, []);
 
 
-    // useEffect(() => {
-    //    const fetchMessage = async () => {
-    //        const fetchedMessage = await DataStore.query(Message, Predicates.ALL, {
-    //           page: 0,
-    //           limit: 10
-    //         });
-    //        console.log(fetchedMessage)
-    //    }
-    //    fetchMessage();
-    // }, [])
-    
-    
-    // const { height, width } = useWindowDimensions();
-    // console.log(height, width);
-    
-    return (
-        <View style={styles.page}>
-            <FlatList 
-              data={chatRooms}
-              renderItem={({item}) => <ChatRoomItem chatRooms={item} /> }
-              keyExtractor={item => item.id} 
-              showsVerticalScrollIndicator={false}     
-            />
-        </View>
-    )
+
+  return (
+    <View style={styles.page}>
+      <FlatList
+        data={chatRooms}
+        renderItem={({ item }) => <ChatRoomItem chatRoom={item} />}
+        showsVerticalScrollIndicator={false}
+      />
+    </View>
+  );
 }
 
-export default HomeChatScreen;
