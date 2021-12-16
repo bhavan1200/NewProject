@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import { View, Text, Image, FlatList, Pressable, SafeAreaView} from 'react-native';
 import UserItem from "../../../Components/chatComponent/UserItem"
-import Amplify, {DataStore, Hub, Auth, Predicates} from "aws-amplify";
+import Amplify, {DataStore, Hub, Auth, Predicates, Alert} from "aws-amplify";
 import { User, Message, ChatRoom, ChatRoomUser } from '../../../models';
 import styles from "./styles";
 import { useWindowDimensions } from 'react-native';
@@ -73,12 +73,16 @@ const UsersScreen = () => {
         
 
         const authUser = await Auth.currentAuthenticatedUser();
-        const dbUser = await DataStore.query(User, authUser.attributes.sub)
+        const dbUser = await DataStore.query(User, authUser.attributes.sub);
+        if(!dbUser){
+            Alert.alert("There Was an error creating group")
+            return;
+        }
 
         // Create a ChatRoom 
         const newChatRoomData = { 
             newMessage: 0,
-            admin: dbUser,
+            Admin: dbUser,
         };
         if(users.length > 1) {
             newChatRoomData.name = "New Group";

@@ -1,10 +1,12 @@
 import React, { useEffect, useState } from 'react'
-import {View, Text, Image, useWindowDimensions,} from 'react-native';
+import {View, Text, Image, useWindowDimensions, Pressable} from 'react-native';
 import { DataStore } from '@aws-amplify/datastore';
 import { Auth } from '@aws-amplify/auth';
 import Feather from 'react-native-vector-icons/Feather';
 import { User, ChatRoomUser, ChatRoom } from "../../models";
 import moment from "moment";
+import { useNavigation } from '@react-navigation/core';
+
 
 
 const ChatRoomHeader = ({id, children}) => {
@@ -14,6 +16,7 @@ const ChatRoomHeader = ({id, children}) => {
  const [chatRoom, setChatRoom] = useState<ChatRoom | undefined>(undefined)
 
   const { width } = useWindowDimensions();
+  const navigation = useNavigation();
 
     const fetchUsers = async () => {
             const fetchedUsers = (await DataStore.query(ChatRoomUser))
@@ -61,6 +64,11 @@ const ChatRoomHeader = ({id, children}) => {
     ) 
   };
 
+  const openInfo = () => {
+    //Redirect to info page
+    navigation.navigate("GroupInfoScreen", { id });
+  }
+
   const isGroup = allUsers.length > 2;
 
 
@@ -77,10 +85,10 @@ const ChatRoomHeader = ({id, children}) => {
         source={{uri: chatRoom?.imageUri || user?.imageUri}}
       />
 
-      <View style={{flex: 1, marginLeft: 13,}}>
+      <Pressable onPress={openInfo} style={{flex: 1, marginLeft: 13,}}>
         <Text style={{  fontWeight: "bold"}}>{ chatRoom?.name || user?.name}</Text>
         <Text numberOfLines={1}>{ isGroup ? getUsernames() : getLastOnlineText()}</Text>
-      </View>
+      </Pressable>
       
       <View style={{flexDirection: "row"}}>
       <Feather name="camera" size={24} color="black" style={{marginHorizontal: 7,}}/>

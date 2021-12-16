@@ -4,6 +4,7 @@ import {createNativeStackNavigator} from '@react-navigation/native-stack';
 import Tab from '../Tab';
 import ChatRoomScreen from '../../screens/ChatScreen/ChatRoomScreen';
 import UsersScreen from '../../screens/ChatScreen/UsersScreen';
+import GroupInfoScreen from '../../screens/ChatScreen/GroupInfoScreen';
 import Feather from 'react-native-vector-icons/Feather';
 import ChatRoomHeader from "../Header/ChatRoomHeader"
 import HomeHeader from "../Header/HomeHeader"
@@ -27,6 +28,10 @@ const StackAndTab = () => {
           headerTitle: () => <ChatRoomHeader id={route.params?.id}/>,
           headerBackTitleVisible: false
         })}
+      />
+       <RootStack.Screen
+        name="GroupInfoScreen"
+        component={GroupInfoScreen}
       />
       <RootStack.Screen
         name="UsersScreen"
