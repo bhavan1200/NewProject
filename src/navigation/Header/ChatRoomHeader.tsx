@@ -3,32 +3,42 @@ import {View, Text, Image, useWindowDimensions,} from 'react-native';
 import { DataStore } from '@aws-amplify/datastore';
 import { Auth } from '@aws-amplify/auth';
 import Feather from 'react-native-vector-icons/Feather';
-import { User, ChatRoomUser } from "../../models";
+import { User, ChatRoomUser, ChatRoom } from "../../models";
 import moment from "moment";
 
 
 const ChatRoomHeader = ({id, children}) => {
 
  const [user, setUser] = useState<User|null>(null); 
+ const [allUsers, setAllUsers] = useState<User | []>([])
+ const [chatRoom, setChatRoom] = useState<ChatRoom | undefined>(undefined)
 
   const { width } = useWindowDimensions();
 
-  const fetchUsers = async () => {
-          const fetchedUsers = (await DataStore.query(ChatRoomUser))
-          .filter(chatRoomUser => chatRoomUser.chatroom.id === id)
-          .map(chatRoomUser => chatRoomUser.user);
+    const fetchUsers = async () => {
+            const fetchedUsers = (await DataStore.query(ChatRoomUser))
+            .filter(chatRoomUser => chatRoomUser.chatroom.id === id)
+            .map(chatRoomUser => chatRoomUser.user);
 
-        //   setUsers(fetchedUsers);
-          const authUser = await Auth.currentAuthenticatedUser();
-          setUser(fetchedUsers.find(user => user.id !== authUser.attributes.sub) || null)
-  }
+            setAllUsers(fetchedUsers);
+            const authUser = await Auth.currentAuthenticatedUser();
+            setUser(
+              fetchedUsers.find(user => user.id !== authUser.attributes.sub) || null
+            );
+    }
+
+    const fetchChatRooms = async () => {
+       DataStore.query(ChatRoom, id).then(setChatRoom)
+    }
 
   useEffect(() => {
     if(!id){
       return;
     }
     fetchUsers();
+    fetchChatRooms();
     }, []);
+    
 
     const getLastOnlineText = () => {
     if (!user?.lastOnlineAt) {
@@ -45,6 +55,14 @@ const ChatRoomHeader = ({id, children}) => {
     }
   };
 
+  const getUsernames = () => {
+    return(
+      allUsers.map(user => user.name).join(', ')
+    ) 
+  };
+
+  const isGroup = allUsers.length > 2;
+
 
   return(
     <View style={{
@@ -56,12 +74,12 @@ const ChatRoomHeader = ({id, children}) => {
     }}>
       <Image
         style={{width: 30, height: 30, borderRadius: 30}} 
-        source={{uri: user?.imageUri}}
+        source={{uri: chatRoom?.imageUri || user?.imageUri}}
       />
 
       <View style={{flex: 1, marginLeft: 13,}}>
-        <Text style={{  fontWeight: "bold"}}>{user?.name}</Text>
-        <Text>{getLastOnlineText()}</Text>
+        <Text style={{  fontWeight: "bold"}}>{ chatRoom?.name || user?.name}</Text>
+        <Text numberOfLines={1}>{ isGroup ? getUsernames() : getLastOnlineText()}</Text>
       </View>
       
       <View style={{flexDirection: "row"}}>

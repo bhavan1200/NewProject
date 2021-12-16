@@ -9,7 +9,8 @@
       "UnauthRoleName": "amplify-bbest-staging-94023-unauthRole",
       "StackName": "amplify-bbest-staging-94023",
       "StackId": "arn:aws:cloudformation:ap-south-1:135441936229:stack/amplify-bbest-staging-94023/0ea4f3a0-45f8-11ec-8c34-0a4ea4546290",
-      "AmplifyAppId": "d5gs8jxpyiqnm"
+      "AmplifyAppId": "d5gs8jxpyiqnm",
+      "AuthTriggerTemplateURL": "https://s3.amazonaws.com/amplify-bbest-staging-94023-deployment/amplify-cfn-templates/auth/auth-trigger-cloudformation-template.json"
     },
     "categories": {
       "auth": {

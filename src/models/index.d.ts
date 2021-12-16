@@ -46,6 +46,9 @@ export declare class ChatRoom {
   readonly Messages?: (Message | null)[];
   readonly ChatRoomUsers?: (ChatRoomUser | null)[];
   readonly newMessage?: number;
+  readonly Admin?: User;
+  readonly name?: string;
+  readonly imageUri?: string;
   readonly createdAt?: string;
   readonly updatedAt?: string;
   constructor(init: ModelInit<ChatRoom, ChatRoomMetaData>);
